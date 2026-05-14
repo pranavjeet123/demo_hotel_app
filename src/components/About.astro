@@ -1,0 +1,218 @@
+---
+---
+<section id="about" class="about-section">
+  <div class="container">
+    <div class="about-grid">
+      <!-- Images side -->
+      <div class="about-images">
+        <div class="img-main">
+          <img
+            src="https://images.unsplash.com/photo-1590073242678-70ee3fc28f8e?w=700&q=85&auto=format&fit=crop"
+            alt="LuxStay Resort exterior"
+            loading="lazy"
+          />
+        </div>
+        <div class="img-accent">
+          <img
+            src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=400&q=80&auto=format&fit=crop"
+            alt="Spa & wellness"
+            loading="lazy"
+          />
+          <div class="stat-badge">
+            <span class="stat-number">28</span>
+            <span class="stat-label">Years of Excellence</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Text side -->
+      <div class="about-text">
+        <p class="section-label">About LuxStay</p>
+        <h2 class="section-title">
+          A Legacy of <em>Unparalleled</em><br />Luxury
+        </h2>
+        <p class="about-desc">
+          Nestled between ancient mountains and crystalline waters, LuxStay Resort has been
+          redefining luxury hospitality since 1998. Our philosophy is simple: every guest
+          deserves an experience that transcends the ordinary.
+        </p>
+        <p class="about-desc">
+          From the moment you arrive, our dedicated team anticipates your every desire —
+          curating personalised itineraries, sourcing rare culinary experiences, and ensuring
+          that every detail of your stay reflects the artistry of true luxury.
+        </p>
+
+        <div class="awards-row">
+          {[
+            { icon: '◆', label: 'Forbes 5-Star', year: '2024' },
+            { icon: '◆', label: 'Condé Nast Top 10', year: '2023' },
+            { icon: '◆', label: 'Michelin Starred', year: '2024' },
+          ].map(({ icon, label, year }) => (
+            <div class="award-item">
+              <span class="award-icon">{icon}</span>
+              <div>
+                <p class="award-label">{label}</p>
+                <p class="award-year">{year}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <a href="#rooms" class="cta-link">
+          Explore Our Rooms
+          <span class="cta-arrow">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about-section {
+    padding: 8rem 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .about-section::before {
+    content: 'LUXSTAY';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: var(--font-serif);
+    font-size: clamp(6rem, 15vw, 14rem);
+    font-weight: 300;
+    color: rgba(201, 168, 76, 0.03);
+    pointer-events: none;
+    white-space: nowrap;
+    letter-spacing: 0.2em;
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: center;
+  }
+
+  .about-images {
+    position: relative;
+  }
+  .img-main {
+    width: 85%;
+    aspect-ratio: 4/5;
+    overflow: hidden;
+  }
+  .img-main img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.8s ease;
+  }
+  .img-main:hover img { transform: scale(1.04); }
+
+  .img-accent {
+    position: absolute;
+    bottom: -2rem;
+    right: 0;
+    width: 50%;
+    aspect-ratio: 1;
+    overflow: hidden;
+    border: 4px solid var(--bg);
+  }
+  .img-accent img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .stat-badge {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(201, 168, 76, 0.92);
+    padding: 0.75rem 1rem;
+    text-align: center;
+  }
+  .stat-number {
+    display: block;
+    font-family: var(--font-serif);
+    font-size: 2rem;
+    color: #080808;
+    font-weight: 400;
+    line-height: 1;
+  }
+  .stat-label {
+    display: block;
+    font-family: var(--font-sans);
+    font-size: 0.6rem;
+    color: rgba(8, 8, 8, 0.7);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-top: 0.2rem;
+  }
+
+  .about-text { padding-right: 1rem; }
+
+  .about-desc {
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    color: rgba(245, 240, 232, 0.65);
+    line-height: 1.85;
+    margin-top: 1.5rem;
+  }
+
+  .awards-row {
+    display: flex;
+    gap: 2rem;
+    margin-top: 2.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+    flex-wrap: wrap;
+  }
+  .award-item {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .award-icon { color: var(--gold); font-size: 0.6rem; }
+  .award-label {
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    color: var(--cream);
+    font-weight: 500;
+  }
+  .award-year {
+    font-family: var(--font-sans);
+    font-size: 0.6rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+  }
+
+  .cta-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 2.5rem;
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    transition: gap 0.3s;
+  }
+  .cta-link:hover { gap: 1.25rem; }
+  .cta-arrow { transition: transform 0.3s; }
+  .cta-link:hover .cta-arrow { transform: translateX(4px); }
+
+  @media (max-width: 900px) {
+    .about-grid {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+    .about-images { height: 400px; }
+    .img-main { width: 75%; height: 100%; }
+    .about-section { padding: 5rem 0; }
+  }
+</style>
