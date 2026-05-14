@@ -61,7 +61,7 @@ export default function MobileMenu() {
           <span style={{ color: '#c9a84c', fontSize: '0.6rem', letterSpacing: '0.3em', fontFamily: 'Inter, sans-serif', fontWeight: 500, textTransform: 'uppercase', marginBottom: '0.2rem' }}>
             Est. 1998
           </span>
-          ISLAND ARCHITECTURE
+          LUXSTAY
         </a>
 
         {/* Desktop nav */}
