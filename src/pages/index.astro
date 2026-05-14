@@ -1,0 +1,310 @@
+---
+import Layout from '../layouts/Layout.astro';
+import About from '../components/About.astro';
+import Amenities from '../components/Amenities.astro';
+import Experiences from '../components/Experiences.astro';
+import Testimonials from '../components/Testimonials.astro';
+import Footer from '../components/Footer.astro';
+
+import MobileMenu from '../components/islands/MobileMenu.tsx';
+import HeroSlider from '../components/islands/HeroSlider.tsx';
+import BookingWidget from '../components/islands/BookingWidget.tsx';
+import RoomCarousel from '../components/islands/RoomCarousel.tsx';
+import GalleryLightbox from '../components/islands/GalleryLightbox.tsx';
+---
+
+<Layout>
+  <!-- ─────────────────────────────────────────────────────────────────────
+       ISLAND ①  MobileMenu  →  client:load
+       Reason: Navigation must be interactive immediately. JS loads on page load.
+       Static alternative: plain <nav> with no hamburger toggle — would break mobile.
+  ──────────────────────────────────────────────────────────────────────── -->
+  <MobileMenu client:load />
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       HERO SECTION  (partially hydrated)
+  ════════════════════════════════════════════════════════════════════════ -->
+  <section class="hero">
+    <!-- ─────────────────────────────────────────────────────────────────
+         ISLAND ②  HeroSlider  →  client:load
+         Reason: Above-the-fold animation. Slide controls need JS.
+         Static fallback: first slide image rendered in SSR so no blank flash.
+    ──────────────────────────────────────────────────────────────────── -->
+    <HeroSlider client:load />
+
+    <!-- ✦ STATIC: Hero text — pure HTML, zero JS, rendered at build time -->
+    <div class="hero-content">
+      <div class="hero-eyebrow">
+        <span class="hero-line" />
+        <span class="hero-eyebrow-text">Luxury Resort & Spa</span>
+      </div>
+      <h1 class="hero-title">
+        Where Every Moment<br />
+        <em>Becomes a Memory</em>
+      </h1>
+      <p class="hero-subtitle">
+        Private villas. Overwater suites. Bespoke experiences.<br />
+        Yours, from <span class="hero-price">$760</span> per night.
+      </p>
+      <div class="hero-actions">
+        <a href="#booking" class="btn-primary">Book Your Escape</a>
+        <a href="#rooms" class="btn-ghost">Explore Rooms ↓</a>
+      </div>
+    </div>
+
+    <!-- ✦ STATIC: Scroll indicator -->
+    <div class="scroll-hint">
+      <div class="scroll-line" />
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       BOOKING WIDGET  →  client:load
+       ISLAND ③  BookingWidget
+       Reason: Critical conversion element above the fold. Date pickers,
+       counters, and form submission all require JS.
+       Without hydration: renders as a static decorative block (no interactivity).
+  ════════════════════════════════════════════════════════════════════════ -->
+  <div class="booking-bar" id="booking">
+    <div class="container">
+      <BookingWidget client:load />
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       STATIC SECTIONS — zero JavaScript, rendered at build time
+  ════════════════════════════════════════════════════════════════════════ -->
+  <About />
+  <Amenities />
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       ROOMS SECTION  (partially hydrated)
+  ════════════════════════════════════════════════════════════════════════ -->
+  <section id="rooms" class="rooms-section">
+    <div class="container">
+      <div class="rooms-header">
+        <div>
+          <p class="section-label">Accommodations</p>
+          <h2 class="section-title">Rooms & <em>Suites</em></h2>
+        </div>
+        <p class="rooms-sub">
+          Each accommodation is a private sanctuary — designed with indigenous
+          materials, panoramic vistas, and every comfort imaginable.
+        </p>
+      </div>
+
+      <!-- ──────────────────────────────────────────────────────────────
+           ISLAND ④  RoomCarousel  →  client:visible
+           Reason: Below the fold. JS deferred until element enters viewport.
+           On a slow 3G mobile connection, this saves ~40KB of parse/execute
+           until the user actually scrolls down.
+      ─────────────────────────────────────────────────────────────────── -->
+      <RoomCarousel client:visible />
+    </div>
+  </section>
+
+  <Experiences />
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       GALLERY SECTION  (partially hydrated)
+  ════════════════════════════════════════════════════════════════════════ -->
+  <section id="gallery" class="gallery-section">
+    <div class="container">
+      <div class="gallery-header">
+        <p class="section-label">Visual Stories</p>
+        <h2 class="section-title">Life at <em>LuxStay</em></h2>
+      </div>
+
+      <!-- ──────────────────────────────────────────────────────────────
+           ISLAND ⑤  GalleryLightbox  →  client:visible
+           Reason: Deep below fold. Lightbox overlay requires JS but only
+           when the user scrolls to the gallery. Saves ~15KB idle parse cost.
+      ─────────────────────────────────────────────────────────────────── -->
+      <GalleryLightbox client:visible />
+    </div>
+  </section>
+
+  <!-- ✦ STATIC: Testimonials — pure HTML -->
+  <Testimonials />
+
+  <!-- Footer contains ISLAND ⑥ NewsletterForm → client:idle (inside Footer.astro) -->
+  <Footer />
+</Layout>
+
+<style>
+  /* ── Hero ──────────────────────────────────────────────────────── */
+  .hero {
+    position: relative;
+    height: 100svh;
+    min-height: 640px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    background: #0a0a0a;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 10;
+    max-width: 680px;
+    padding: 0 2rem;
+    margin-left: max(2rem, calc((100vw - 1280px) / 2 + 2rem));
+    padding-top: 5rem;
+  }
+
+  .hero-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+  .hero-line {
+    display: block;
+    width: 2.5rem;
+    height: 1px;
+    background: var(--gold);
+  }
+  .hero-eyebrow-text {
+    font-family: var(--font-sans);
+    font-size: 0.68rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 400;
+  }
+
+  .hero-title {
+    font-family: var(--font-serif);
+    font-size: clamp(2.8rem, 6vw, 5.5rem);
+    font-weight: 300;
+    line-height: 1.1;
+    color: var(--white);
+    margin-bottom: 1.5rem;
+  }
+  .hero-title em {
+    font-style: italic;
+    color: var(--gold-light);
+  }
+
+  .hero-subtitle {
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    color: rgba(245, 240, 232, 0.65);
+    line-height: 1.8;
+    margin-bottom: 2.5rem;
+  }
+  .hero-price {
+    color: var(--gold);
+    font-weight: 500;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .btn-primary {
+    display: inline-block;
+    background: var(--gold);
+    color: #080808;
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 600;
+    padding: 1rem 2.5rem;
+    transition: background 0.3s;
+  }
+  .btn-primary:hover { background: var(--gold-light); }
+
+  .btn-ghost {
+    display: inline-block;
+    color: rgba(245, 240, 232, 0.75);
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(245, 240, 232, 0.3);
+    transition: color 0.3s, border-color 0.3s;
+  }
+  .btn-ghost:hover {
+    color: var(--gold);
+    border-color: var(--gold);
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 2.5rem;
+    left: max(2rem, calc((100vw - 1280px) / 2 + 2rem));
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .scroll-line {
+    width: 1px;
+    height: 2.5rem;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.4; transform: scaleY(1); }
+    50% { opacity: 1; transform: scaleY(1.1); }
+  }
+  .scroll-hint span {
+    font-family: var(--font-sans);
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(245, 240, 232, 0.45);
+    writing-mode: vertical-lr;
+    transform: rotate(180deg);
+  }
+
+  /* ── Booking bar ──────────────────────────────────────────────── */
+  .booking-bar {
+    background: var(--bg);
+    padding: 3rem 0;
+    position: relative;
+    z-index: 20;
+  }
+
+  /* ── Rooms section ──────────────────────────────────────────────── */
+  .rooms-section {
+    padding: 8rem 0;
+  }
+  .rooms-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: end;
+    margin-bottom: 3rem;
+  }
+  .rooms-sub {
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    color: rgba(245, 240, 232, 0.55);
+    line-height: 1.8;
+    padding-bottom: 0.5rem;
+  }
+
+  /* ── Gallery section ──────────────────────────────────────────── */
+  .gallery-section {
+    padding: 8rem 0;
+    background: var(--surface);
+  }
+  .gallery-header { margin-bottom: 3rem; }
+
+  @media (max-width: 768px) {
+    .rooms-header { grid-template-columns: 1fr; gap: 1rem; }
+    .rooms-section { padding: 5rem 0; }
+    .gallery-section { padding: 5rem 0; }
+    .hero-content { margin-left: 0; padding-top: 7rem; }
+    .scroll-hint { left: 1.25rem; }
+    .booking-bar { padding: 2rem 0; }
+  }
+</style>

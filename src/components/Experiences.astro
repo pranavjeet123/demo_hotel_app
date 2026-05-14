@@ -1,0 +1,219 @@
+---
+const experiences = [
+  {
+    image: 'https://images.unsplash.com/photo-1519197924294-4ba991a11128?w=700&q=80&auto=format&fit=crop',
+    tag: 'Ocean',
+    title: 'Sunset Sailing',
+    desc: 'Private yacht charter as the sun melts into the horizon.',
+    duration: '3 hours',
+    price: '$320',
+  },
+  {
+    image: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=700&q=80&auto=format&fit=crop',
+    tag: 'Underwater',
+    title: 'Private Dive Experience',
+    desc: 'Explore coral reefs with a certified marine biologist guide.',
+    duration: '4 hours',
+    price: '$280',
+  },
+  {
+    image: 'https://images.unsplash.com/photo-1455279032140-49a4bf46f343?w=700&q=80&auto=format&fit=crop',
+    tag: 'Culinary',
+    title: "Chef's Table Dinner",
+    desc: 'An intimate 9-course tasting menu prepared tableside by Chef Marco.',
+    duration: '3.5 hours',
+    price: '$480',
+  },
+];
+---
+
+<section id="experiences" class="experiences-section">
+  <div class="container">
+    <div class="exp-header">
+      <p class="section-label">Curated Experiences</p>
+      <h2 class="section-title">Beyond the <em>Ordinary</em></h2>
+    </div>
+
+    <div class="exp-grid">
+      {experiences.map(({ image, tag, title, desc, duration, price }) => (
+        <div class="exp-card">
+          <div class="exp-image-wrap">
+            <img src={image} alt={title} loading="lazy" />
+            <span class="exp-tag">{tag}</span>
+          </div>
+          <div class="exp-content">
+            <h3 class="exp-title">{title}</h3>
+            <p class="exp-desc">{desc}</p>
+            <div class="exp-meta">
+              <span class="exp-duration">⊙ {duration}</span>
+              <span class="exp-price">{price} <small>/ person</small></span>
+            </div>
+            <a href="#booking" class="exp-link">Enquire →</a>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Stats row — static, zero JS -->
+    <div class="stats-row">
+      {[
+        { value: '340+', label: 'Curated Experiences' },
+        { value: '98%', label: 'Guest Satisfaction' },
+        { value: '45', label: 'Private Villas' },
+        { value: '12', label: 'Award-Winning Restaurants' },
+      ].map(({ value, label }) => (
+        <div class="stat-item">
+          <p class="stat-value">{value}</p>
+          <p class="stat-label">{label}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .experiences-section {
+    padding: 8rem 0;
+  }
+
+  .exp-header { margin-bottom: 3.5rem; }
+
+  .exp-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .exp-card {
+    background: var(--surface);
+    overflow: hidden;
+    border: 1px solid var(--border);
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .exp-card:hover {
+    border-color: rgba(201, 168, 76, 0.5);
+    transform: translateY(-4px);
+  }
+
+  .exp-image-wrap {
+    position: relative;
+    height: 240px;
+    overflow: hidden;
+  }
+  .exp-image-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+  }
+  .exp-card:hover .exp-image-wrap img { transform: scale(1.06); }
+
+  .exp-tag {
+    position: absolute;
+    bottom: 1rem;
+    left: 1rem;
+    font-family: var(--font-sans);
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    background: rgba(8, 8, 8, 0.75);
+    padding: 0.3rem 0.7rem;
+    border: 1px solid rgba(201, 168, 76, 0.3);
+    backdrop-filter: blur(8px);
+  }
+
+  .exp-content { padding: 1.5rem; }
+
+  .exp-title {
+    font-family: var(--font-serif);
+    font-size: 1.3rem;
+    font-weight: 400;
+    color: var(--white);
+    margin-bottom: 0.6rem;
+  }
+
+  .exp-desc {
+    font-family: var(--font-sans);
+    font-size: 0.78rem;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 1.25rem;
+  }
+
+  .exp-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    border-top: 1px solid rgba(201, 168, 76, 0.1);
+    margin-bottom: 1rem;
+  }
+
+  .exp-duration {
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    color: var(--muted);
+  }
+
+  .exp-price {
+    font-family: var(--font-serif);
+    font-size: 1.2rem;
+    color: var(--gold);
+    font-weight: 400;
+  }
+  .exp-price small {
+    font-size: 0.65rem;
+    color: var(--muted);
+    font-family: var(--font-sans);
+  }
+
+  .exp-link {
+    font-family: var(--font-sans);
+    font-size: 0.68rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    transition: letter-spacing 0.3s;
+  }
+  .exp-link:hover { letter-spacing: 0.25em; }
+
+  /* Stats */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    margin-top: 5rem;
+    border: 1px solid var(--border);
+  }
+  .stat-item {
+    padding: 2.5rem 2rem;
+    text-align: center;
+    border-right: 1px solid var(--border);
+  }
+  .stat-item:last-child { border-right: none; }
+  .stat-value {
+    font-family: var(--font-serif);
+    font-size: clamp(2rem, 4vw, 3rem);
+    color: var(--gold);
+    font-weight: 300;
+    line-height: 1;
+    margin-bottom: 0.6rem;
+  }
+  .stat-label {
+    font-family: var(--font-sans);
+    font-size: 0.68rem;
+    color: var(--muted);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 900px) {
+    .exp-grid { grid-template-columns: 1fr; }
+    .stats-row { grid-template-columns: repeat(2, 1fr); }
+    .stat-item:nth-child(2) { border-right: none; }
+    .stat-item:nth-child(3) { border-bottom: none; }
+    .stat-item { border-bottom: 1px solid var(--border); }
+    .experiences-section { padding: 5rem 0; }
+  }
+</style>
