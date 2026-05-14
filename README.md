@@ -35,6 +35,12 @@ npm run preview    # preview production build
 
 ---
 
+## Selective Hydration in Action
+
+![Selective Hydration — JS loads only for interactive islands](public/selective_load.png)
+
+---
+
 ## Validate Selective Hydration — Step by Step
 
 ### 1. Open Network Tab
