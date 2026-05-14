@@ -1,0 +1,105 @@
+---
+export interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'LuxStay Resort & Spa — Where Luxury Meets Nature',
+  description = 'Experience unparalleled luxury at LuxStay Resort. World-class amenities, private villas, and breathtaking ocean views.',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <title>{title}</title>
+    <style is:global>
+      :root {
+        --gold: #c9a84c;
+        --gold-light: #e8c96f;
+        --gold-dim: rgba(201, 168, 76, 0.15);
+        --bg: #080808;
+        --surface: #111111;
+        --surface-2: #1a1a1a;
+        --cream: #f5f0e8;
+        --white: #ffffff;
+        --muted: #777;
+        --border: rgba(201, 168, 76, 0.2);
+        --font-serif: 'Cormorant Garamond', Georgia, serif;
+        --font-sans: 'Inter', system-ui, sans-serif;
+        --radius: 2px;
+        --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+      html { scroll-behavior: smooth; }
+
+      body {
+        font-family: var(--font-sans);
+        background: var(--bg);
+        color: var(--cream);
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
+      }
+
+      img { display: block; max-width: 100%; }
+      a { color: inherit; text-decoration: none; }
+      button { cursor: pointer; border: none; background: none; font-family: inherit; }
+
+      .section-label {
+        font-family: var(--font-sans);
+        font-size: 0.7rem;
+        font-weight: 500;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        color: var(--gold);
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+      .section-label::before {
+        content: '';
+        display: block;
+        width: 2rem;
+        height: 1px;
+        background: var(--gold);
+      }
+
+      .section-title {
+        font-family: var(--font-serif);
+        font-size: clamp(2rem, 5vw, 3.5rem);
+        font-weight: 300;
+        line-height: 1.15;
+        color: var(--white);
+        margin-top: 0.75rem;
+      }
+      .section-title em { font-style: italic; color: var(--gold-light); }
+
+      .container {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 0 2rem;
+      }
+
+      @media (max-width: 768px) {
+        .container { padding: 0 1.25rem; }
+      }
+    </style>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
